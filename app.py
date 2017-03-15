@@ -7,7 +7,7 @@ from camera_pi import Camera
 from passlib.hash import sha256_crypt
 DATABASE = '/home/pi/Desktop/Bsc_Project3/database.db'
 QUERY_GET_USER = 'select password, id from USERS where LOGIN = ?'
-QUERY_FUNCTION_LIST = 'select f.id, function_name from functions ' \
+QUERY_FUNCTION_LIST = 'select f.id, f.function_name, f.function_type from functions ' \
                       +'f inner join user_functions u ' \
                       +'on f.id = u.function_id where u.user_id = ?'
 QUERY_IS_USER_FUNCTION_VALID = 'select 1 from user_functions u' \
@@ -80,8 +80,16 @@ def get_tasks():
 def serviceLogin():    
     userId = getUser()
     if userId > 0:
-        functionList = query_db(QUERY_FUNCTION_LIST, [userId]) #gets function list
-        return jsonify({'functions': functionList})
+        functionMap = []
+        for function in query_db(QUERY_FUNCTION_LIST, [userId]): #gets function list
+            print function
+            functionList = {
+                    'id': function[0],
+                    'name': function[1],
+                    'type': function[2]
+                }
+            functionMap.append(functionList)
+        return jsonify({'functions': functionMap})
     abort(400)
 
 @app.route('/api/json/activity', methods=['POST'])
