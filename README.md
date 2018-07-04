@@ -11,6 +11,6 @@ The doorstrike is connected to a GPIO pin which activates if a signal is send to
 ## Camera
 The camera can be turned on by clicking the nessary button in the app, the server will then start streaming the video feed to the smartphone.
 
-You can find the server sided application under: [Gatekeeper-Android](https://github.com/RidSib/Gatekeeper-Android)
+You can find the client side application under: [Gatekeeper-Android](https://github.com/RidSib/Gatekeeper-Android)
 
 
